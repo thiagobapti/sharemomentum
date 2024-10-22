@@ -331,7 +331,7 @@ export default function Home() {
                 Cancel
               </Button>
               <Button colorScheme="blue" onClick={handleGenerate} ml={3}>
-                Delete
+                Continue
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
