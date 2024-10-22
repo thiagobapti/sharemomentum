@@ -17,13 +17,8 @@ export default async function handler(req: any, res: any) {
   const context = program.context;
 
   const openai = new OpenAIApi({
-    apiKey:
-      "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",
+    apiKey: process.env.OPENAI_API_KEY,
   });
-  // const openai = new OpenAIApi({
-  //   apiKey:
-  //     "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",
-  // });
 
   try {
     const response = (await openai.chat.completions.create({
