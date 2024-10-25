@@ -37,10 +37,28 @@ export default async function handler(req: any, res: any) {
       max_tokens: 50,
     })) as any; // Add this type assertion
 
-    const twoLiner = response.choices[0].message.content.trim();
+    const twoLiner = JSON.parse(response.choices[0].message.content.trim());
 
-    res.setHeader("Content-Type", "text/html");
-    res.status(200).send(`${twoLiner}`);
+    // unsplash api
+    // unsplash api
+    const keywords = program.keywords;
+    const unsplashResponse = await fetch(
+      `https://api.unsplash.com/search/photos?query=${
+        keywords[Math.floor(Math.random() * keywords.length)]
+      }&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
+    );
+
+    const unsplashData = await unsplashResponse.json();
+
+    /// unsplash api
+
+    const result = {
+      llm: twoLiner,
+      backgroundImageUrl: unsplashData.results[0].urls.full,
+    };
+
+    res.setHeader("Content-Type", "text/json");
+    res.status(200).send(result);
   } catch (error) {
     console.log(error);
     res.status(500).send("Error generating two-liner");

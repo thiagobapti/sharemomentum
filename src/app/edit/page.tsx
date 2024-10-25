@@ -104,8 +104,9 @@ export default function Home() {
           console.log(data);
           setCampaign((prevCampaign) => ({
             ...prevCampaign,
-            name: data.phrase1,
-            subtitle: data.phrase2,
+            name: data.llm.phrase1,
+            subtitle: data.llm.phrase2,
+            background: data.backgroundImageUrl,
           }));
         })
         .catch((error) => console.error("Error generating content:", error));

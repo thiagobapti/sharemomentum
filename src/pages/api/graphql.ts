@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { programs } from "@/app/data/database";
-// Define your GraphQL schema
+
 const typeDefs = gql`
   type Program {
     id: Int
@@ -14,14 +14,12 @@ const typeDefs = gql`
   }
 `;
 
-// Define your resolvers
 const resolvers = {
   Query: {
     programs: () => programs,
   },
 };
 
-// Create the Apollo Server
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
