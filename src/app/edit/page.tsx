@@ -31,6 +31,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import UnsplashDialog from "../components/unsplash-dialog";
 import Image from "next/image";
 import { themes as themesData } from "../data/database";
+import { BsStars } from "react-icons/bs";
 
 export default function Home() {
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -132,10 +133,11 @@ export default function Home() {
       <Flex>
         <Flex
           width={300}
-          bg={"#f0f0f0"}
+          bg={"#fffaf4"}
           height={"100vh"}
           direction={"column"}
           paddingX={4}
+          borderRight={"1px solid #ffefdc"}
         >
           <FormControl>
             <FormLabel>Program:</FormLabel>
@@ -343,10 +345,11 @@ export default function Home() {
         </Flex>
         <Flex
           width={300}
-          bg={"#f0f0f0"}
+          bg={"#fffaf4"}
           height={"100vh"}
           alignItems={"start"}
           paddingX={4}
+          borderLeft={"1px solid #ffefdc"}
         >
           <button onClick={handleDownload}>Download</button>
           <label>
@@ -358,15 +361,19 @@ export default function Home() {
         isOpen={isAlertDialogOpen}
         leastDestructiveRef={cancelRef}
         onClose={onClose}
+        closeOnEsc={false}
+        closeOnOverlayClick={false}
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Welcome!
+              Create Campaign
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Select a campaign to continue
+              Select a program and let <strong>AI</strong> generate an initial
+              campaign model, which you can <strong>customize</strong> later to
+              suit your cause.
               <select
                 onChange={(e) =>
                   setCampaign((prevCampaign) => ({
@@ -380,9 +387,10 @@ export default function Home() {
                   borderRadius: "4px",
                   border: "1px solid #ccc",
                   backgroundColor: "white",
+                  marginTop: "10px",
                 }}
               >
-                <option value="">Select an option</option>
+                <option value="">Program</option>
                 {programs.map((program: any) => (
                   <option key={program.id} value={program.id}>
                     {program.name}
@@ -392,11 +400,15 @@ export default function Home() {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="blue" onClick={handleGenerate} ml={3}>
-                Continue
+              <Button
+                ref={cancelRef}
+                colorScheme="purple"
+                onClick={handleGenerate}
+                ml={3}
+                disabled={!campaign.programId}
+              >
+                Ask AI
+                <BsStars size={20} style={{ marginLeft: "7px" }} />
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
