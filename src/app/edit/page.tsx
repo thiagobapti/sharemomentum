@@ -51,6 +51,7 @@ export default function Home() {
   const [programs, setPrograms] = useState([]);
   const [themes, setThemes] = useState(themesData);
   const [theme, setTheme] = useState<any>();
+  const [isWorking, setIsWorking] = useState(false);
   const handleDownload = () => {
     if (canvasRef.current) {
       html2canvas(canvasRef.current, {
@@ -108,6 +109,7 @@ export default function Home() {
 
   const handleGenerate = useCallback(() => {
     if (campaign.programId) {
+      setIsWorking(true);
       fetch(`/api/generate?programId=${campaign.programId}`)
         .then((response) => response.json())
         .then((data: any) => {
@@ -121,6 +123,7 @@ export default function Home() {
             themeId: randomTheme.id.toString(),
             themeOpacity: randomTheme.defaultOpacity,
           }));
+          setIsWorking(false);
         })
         .catch((error) => console.error("Error generating content:", error));
     }
@@ -414,6 +417,25 @@ export default function Home() {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
+      {isWorking && (
+        <AlertDialog
+          isOpen={true}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+          closeOnEsc={false}
+          closeOnOverlayClick={false}
+        >
+          <AlertDialogOverlay>
+            <Flex
+              justifyContent={"center"}
+              alignItems={"center"}
+              height={"100%"}
+            >
+              Working
+            </Flex>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      )}
       {isBackgroundDialogOpen && (
         <UnsplashDialog
           isOpen={isBackgroundDialogOpen}
