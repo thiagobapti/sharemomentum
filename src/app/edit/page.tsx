@@ -57,8 +57,8 @@ export default function Home() {
       html2canvas(canvasRef.current, {
         allowTaint: true,
         useCORS: true,
-        width: 600, // Set the desired width
-        height: 400, // Set the desired height
+        width: 1080, // Set the desired width
+        height: 1920, // Set the desired height
       }).then(function (canvas) {
         const dataURL = canvas.toDataURL("image/png");
         const link = document.createElement("a");
@@ -271,11 +271,18 @@ export default function Home() {
             </Button>
           </Box>
         </Flex>
-        <Flex flex={1} direction={"column"} alignItems={"center"}>
+        <Flex
+          flex={1}
+          direction={"column"}
+          // alignItems={"center"}
+          // border={"1px solid blue"}
+          position={"relative"}
+          width={"calc(100% - 600px)"}
+        >
           <Flex
             direction={"row"}
             marginTop={"10px"}
-            marginBottom={"50px"}
+            marginBottom={"12px"}
             align={"flex-start"}
             width={"100%"}
             padding={"0 20px"}
@@ -298,53 +305,60 @@ export default function Home() {
               share Momentum
             </Text>
           </Flex>
-          <div
-            ref={canvasRef}
-            style={{
-              backgroundImage: `url(${campaign.background})`,
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              height: "500px",
-              width: "300px",
-              position: "relative",
-              padding: "20px",
-            }}
+          <Flex
+            overflowX={"scroll"}
+            // border={"1px solid red"}
+            direction={"column"}
           >
             <div
+              ref={canvasRef}
               style={{
-                backgroundColor: theme?.color,
-                height: "100%",
-                width: "100%",
-                opacity: campaign.themeOpacity,
-                position: "absolute",
-                top: 0,
-                left: 0,
-                zIndex: 0,
-              }}
-            ></div>
-            <div
-              style={{
+                backgroundImage: `url(${campaign.background})`,
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                height: "1920px", // Full height
+                width: "1080px", // Full width
                 position: "relative",
-                fontSize: "24px",
-                fontWeight: "bold",
-                textAlign: "center",
-                color: "white",
+                padding: "20px",
+                // display: "none",
               }}
             >
-              {campaign.name}
+              <div
+                style={{
+                  backgroundColor: theme?.color,
+                  height: "100%",
+                  width: "100%",
+                  opacity: campaign.themeOpacity,
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  zIndex: 0,
+                }}
+              ></div>
+              <div
+                style={{
+                  position: "relative",
+                  fontSize: "120px",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  color: "white",
+                }}
+              >
+                {campaign.name}
+              </div>
+              <div
+                style={{
+                  position: "relative",
+                  fontSize: "70px",
+                  textAlign: "center",
+                  color: "white",
+                }}
+              >
+                {campaign.subtitle}
+              </div>
             </div>
-            <div
-              style={{
-                position: "relative",
-                fontSize: "18px",
-                textAlign: "center",
-                color: "white",
-              }}
-            >
-              {campaign.subtitle}
-            </div>
-          </div>
+          </Flex>
         </Flex>
         <Flex
           width={300}

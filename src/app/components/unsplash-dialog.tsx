@@ -25,14 +25,16 @@ function UnsplashDialog({
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const handleSearch = async () => {
-    // Fetch images from Unsplash API
+  const handleSearch = async (newSearch = false) => {
+    const currentPage = newSearch ? 1 : page;
     const response = await fetch(
-      `https://api.unsplash.com/search/photos?query=${searchTerm}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
+      `https://api.unsplash.com/search/photos?query=${searchTerm}&page=${currentPage}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
     );
     const data = await response.json();
-    setImages(data.results);
+    setImages(newSearch ? data.results : [...images, ...data.results]);
+    setPage(currentPage + 1);
   };
 
   const handleImageSelect = (imageUrl: string) => {
@@ -40,20 +42,25 @@ function UnsplashDialog({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => onClose("")}>
+    <Modal isOpen={isOpen} onClose={() => onClose("")} size="6xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Search Unsplash</ModalHeader>
+        <ModalHeader>Select Background</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Input
-            placeholder="Search for images"
+            placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(true);
+              }
+            }}
           />
-          <Button onClick={handleSearch} mt={4}>
+          {/* <Button onClick={() => handleSearch(true)} mt={4}>
             Search
-          </Button>
+          </Button> */}
           <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={4}>
             {images.map((image: any) => (
               <GridItem key={image.id}>
@@ -66,9 +73,14 @@ function UnsplashDialog({
               </GridItem>
             ))}
           </Grid>
+          {images.length > 0 && (
+            <Button onClick={() => handleSearch()} mt={4}>
+              Load More
+            </Button>
+          )}
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={() => onClose("")}>
+          <Button mr={3} onClick={() => onClose("")}>
             Close
           </Button>
         </ModalFooter>
