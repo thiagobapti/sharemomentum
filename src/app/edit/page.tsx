@@ -20,6 +20,10 @@ import {
   FormHelperText,
   Input,
   Text,
+  Slider,
+  SliderTrack,
+  SliderThumb,
+  SliderFilledTrack,
 } from "@chakra-ui/react";
 import logoMinSvg from "../sharemomentum-logo-min.svg";
 import html2canvas from "html2canvas";
@@ -41,6 +45,7 @@ export default function Home() {
     name: "",
     subtitle: "",
     background: "",
+    themeOpacity: 0,
   });
   const [programs, setPrograms] = useState([]);
   const [themes, setThemes] = useState(themesData);
@@ -114,6 +119,7 @@ export default function Home() {
             subtitle: data.llm.phrase2,
             background: data.backgroundImageUrl,
             themeId: randomTheme.id.toString(),
+            themeOpacity: randomTheme.defaultOpacity,
           }));
         })
         .catch((error) => console.error("Error generating content:", error));
@@ -168,6 +174,7 @@ export default function Home() {
                   setCampaign((prevCampaign) => ({
                     ...prevCampaign,
                     themeId: _theme.id.toString(),
+                    themeOpacity: _theme.defaultOpacity,
                   }));
                   setTheme(_theme);
                 }
@@ -188,6 +195,29 @@ export default function Home() {
                 </option>
               ))}
             </select>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Opacity:</FormLabel>
+            <Slider
+              aria-label="slider-ex-2"
+              colorScheme="pink"
+              value={campaign.themeOpacity * 100}
+              min={0}
+              max={100}
+              onChange={(val) => {
+                console.log("val", val / 100);
+                setCampaign((prevCampaign) => ({
+                  ...prevCampaign,
+                  themeOpacity: val / 100,
+                }));
+              }}
+            >
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
           </FormControl>
 
           <FormControl>
@@ -280,7 +310,7 @@ export default function Home() {
                 backgroundColor: theme?.color,
                 height: "100%",
                 width: "100%",
-                opacity: theme?.defaultOpacity,
+                opacity: campaign.themeOpacity,
                 position: "absolute",
                 top: 0,
                 left: 0,
