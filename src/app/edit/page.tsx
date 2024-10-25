@@ -278,6 +278,7 @@ export default function Home() {
           // border={"1px solid blue"}
           position={"relative"}
           width={"calc(100% - 600px)"}
+          height={"100vh"}
         >
           <Flex
             direction={"row"}
@@ -309,6 +310,8 @@ export default function Home() {
             overflowX={"scroll"}
             // border={"1px solid red"}
             direction={"column"}
+            padding={"20px"}
+            // alignItems={"center"}
           >
             <div
               ref={canvasRef}
@@ -320,7 +323,7 @@ export default function Home() {
                 height: "1920px", // Full height
                 width: "1080px", // Full width
                 position: "relative",
-                padding: "20px",
+                // padding: "20px",
                 // display: "none",
               }}
             >
