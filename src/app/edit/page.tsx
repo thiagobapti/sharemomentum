@@ -110,7 +110,6 @@ export default function Home() {
       fetch(`/api/generate?programId=${campaign.programId}`)
         .then((response) => response.json())
         .then((data: any) => {
-          console.log(data);
           const randomTheme = themes[Math.floor(Math.random() * themes.length)];
           setTheme(randomTheme);
           setCampaign((prevCampaign) => ({
@@ -131,7 +130,13 @@ export default function Home() {
   return (
     <>
       <Flex>
-        <Flex width={250} bg={"#f0f0f0"} height={"100vh"} direction={"column"}>
+        <Flex
+          width={300}
+          bg={"#f0f0f0"}
+          height={"100vh"}
+          direction={"column"}
+          paddingX={4}
+        >
           <FormControl>
             <FormLabel>Program:</FormLabel>
             <select
@@ -167,9 +172,6 @@ export default function Home() {
                   (theme: any) =>
                     theme.id.toString() === e.target.value.toString()
                 );
-                console.log("e.target.value", e.target.value);
-                console.log("_theme", _theme);
-                console.log("themes", themes);
                 if (_theme) {
                   setCampaign((prevCampaign) => ({
                     ...prevCampaign,
@@ -206,7 +208,6 @@ export default function Home() {
               min={0}
               max={100}
               onChange={(val) => {
-                console.log("val", val / 100);
                 setCampaign((prevCampaign) => ({
                   ...prevCampaign,
                   themeOpacity: val / 100,
@@ -340,7 +341,13 @@ export default function Home() {
             </div>
           </div>
         </Flex>
-        <Flex width={250} bg={"#f0f0f0"} height={"100vh"} alignItems={"start"}>
+        <Flex
+          width={300}
+          bg={"#f0f0f0"}
+          height={"100vh"}
+          alignItems={"start"}
+          paddingX={4}
+        >
           <button onClick={handleDownload}>Download</button>
           <label>
             <textarea defaultValue={externalLink}></textarea>
