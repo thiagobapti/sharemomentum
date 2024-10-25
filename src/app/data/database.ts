@@ -31,4 +31,37 @@ const programs = [
   },
 ];
 
-export { programs };
+const themes = [
+  {
+    id: 0,
+    label: "Black",
+    color: "#000000",
+    defaultOpacity: 0.5,
+  },
+  {
+    id: 1,
+    label: "Yellow",
+    color: "#FFD700",
+    defaultOpacity: 0.5,
+  },
+  {
+    id: 2,
+    label: "Blue",
+    color: "#0000FF",
+    defaultOpacity: 0.5,
+  },
+  {
+    id: 3,
+    label: "Green",
+    color: "#00FF00",
+    defaultOpacity: 0.5,
+  },
+  {
+    id: 4,
+    label: "Red",
+    color: "#FF0000",
+    defaultOpacity: 0.5,
+  },
+];
+
+export { programs, themes };

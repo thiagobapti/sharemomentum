@@ -26,6 +26,7 @@ import html2canvas from "html2canvas";
 import { useCallback, useEffect, useRef, useState } from "react";
 import UnsplashDialog from "../components/unsplash-dialog";
 import Image from "next/image";
+import { themes as themesData } from "../data/database";
 
 export default function Home() {
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -36,11 +37,14 @@ export default function Home() {
   const [isBackgroundDialogOpen, setIsBackgroundDialogOpen] = useState(false);
   const [campaign, setCampaign] = useState({
     programId: "",
+    themeId: "",
     name: "",
     subtitle: "",
     background: "",
   });
   const [programs, setPrograms] = useState([]);
+  const [themes, setThemes] = useState(themesData);
+  const [theme, setTheme] = useState<any>();
   const handleDownload = () => {
     if (canvasRef.current) {
       html2canvas(canvasRef.current, {
@@ -102,18 +106,21 @@ export default function Home() {
         .then((response) => response.json())
         .then((data: any) => {
           console.log(data);
+          const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+          setTheme(randomTheme);
           setCampaign((prevCampaign) => ({
             ...prevCampaign,
             name: data.llm.phrase1,
             subtitle: data.llm.phrase2,
             background: data.backgroundImageUrl,
+            themeId: randomTheme.id.toString(),
           }));
         })
         .catch((error) => console.error("Error generating content:", error));
     }
 
     onClose();
-  }, [campaign.programId]);
+  }, [campaign.programId, themes, setCampaign]);
 
   return (
     <>
@@ -145,10 +152,27 @@ export default function Home() {
               ))}
             </select>
           </FormControl>
-          {/* <FormControl>
-            <FormLabel>Layout:</FormLabel>
+
+          <FormControl>
+            <FormLabel>Theme:</FormLabel>
             <select
-              onChange={(e) => setSelectedLayout(e.target.value)}
+              onChange={(e) => {
+                const _theme = themes.find(
+                  (theme: any) =>
+                    theme.id.toString() === e.target.value.toString()
+                );
+                console.log("e.target.value", e.target.value);
+                console.log("_theme", _theme);
+                console.log("themes", themes);
+                if (_theme) {
+                  setCampaign((prevCampaign) => ({
+                    ...prevCampaign,
+                    themeId: _theme.id.toString(),
+                  }));
+                  setTheme(_theme);
+                }
+              }}
+              value={campaign.themeId}
               style={{
                 width: "100%",
                 padding: "8px",
@@ -158,11 +182,14 @@ export default function Home() {
               }}
             >
               <option value="">Select an option</option>
-              <option value="1">Text</option>
-              <option value="2">+ Icon</option>
-              <option value="3">+ Text</option>
+              {themes.map((theme: any) => (
+                <option key={theme.id} value={theme.id}>
+                  {theme.label}
+                </option>
+              ))}
             </select>
-          </FormControl> */}
+          </FormControl>
+
           <FormControl>
             <FormLabel>Title:</FormLabel>
             <input
@@ -250,10 +277,10 @@ export default function Home() {
           >
             <div
               style={{
-                backgroundColor: "#590e0e",
+                backgroundColor: theme?.color,
                 height: "100%",
                 width: "100%",
-                opacity: 0.8,
+                opacity: theme?.defaultOpacity,
                 position: "absolute",
                 top: 0,
                 left: 0,
