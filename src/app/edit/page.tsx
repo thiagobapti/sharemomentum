@@ -57,8 +57,9 @@ export default function Home() {
       html2canvas(canvasRef.current, {
         allowTaint: true,
         useCORS: true,
-        width: 1080, // Set the desired width
-        height: 1920, // Set the desired height
+        width: 540, // Set the desired width (half of 1080)
+        height: 960, // Set the desired height (half of 1920)
+        scale: 2,
       }).then(function (canvas) {
         const dataURL = canvas.toDataURL("image/png");
         const link = document.createElement("a");
@@ -114,15 +115,14 @@ export default function Home() {
       fetch(`/api/generate?programId=${campaign.programId}`)
         .then((response) => response.json())
         .then((data: any) => {
-          const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-          setTheme(randomTheme);
+          setTheme(themes[0]);
           setCampaign((prevCampaign) => ({
             ...prevCampaign,
             name: data.llm.title,
             subtitle: data.llm.subtitle,
             background: data.backgroundImageUrl,
-            themeId: randomTheme.id.toString(),
-            themeOpacity: randomTheme.defaultOpacity,
+            themeId: themes[0].id.toString(),
+            themeOpacity: themes[0].defaultOpacity,
           }));
           setIsWorking(false);
         })
@@ -143,15 +143,16 @@ export default function Home() {
           paddingX={4}
           borderRight={"1px solid #ffefdc"}
         >
-          <FormControl>
+          <FormControl display={"flex"} flexDirection={"column"}>
             <FormLabel>Program:</FormLabel>
             <select
-              onChange={(e) =>
+              onChange={(e) => {
+                handleGenerate();
                 setCampaign((prevCampaign) => ({
                   ...prevCampaign,
                   programId: e.target.value,
-                }))
-              }
+                }));
+              }}
               value={campaign.programId}
               style={{
                 width: "100%",
@@ -161,15 +162,28 @@ export default function Home() {
                 backgroundColor: "white",
               }}
             >
-              <option value="">Select an option</option>
+              {/* <option value="">Select an option</option> */}
               {programs.map((program: any) => (
                 <option key={program.id} value={program.id}>
                   {program.name}
                 </option>
               ))}
             </select>
+            <Button
+              ref={cancelRef}
+              colorScheme="purple"
+              onClick={handleGenerate}
+              ml={3}
+              disabled={!campaign.programId}
+              marginTop={3}
+              marginBottom={6}
+              alignSelf={"center"}
+            >
+              Ask AI
+              <BsStars size={20} style={{ marginLeft: "7px" }} />
+            </Button>
           </FormControl>
-
+          <hr />
           <FormControl>
             <FormLabel>Theme:</FormLabel>
             <select
@@ -196,7 +210,7 @@ export default function Home() {
                 backgroundColor: "white",
               }}
             >
-              <option value="">Select an option</option>
+              {/* <option value="">Select an option</option> */}
               {themes.map((theme: any) => (
                 <option key={theme.id} value={theme.id}>
                   {theme.label}
@@ -321,15 +335,15 @@ export default function Home() {
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
-                height: "1920px", // Full height
-                width: "1080px", // Full width
+                height: "960px", // Half height
+                width: "540px", // Half width
                 position: "relative",
                 flexShrink: 0,
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
                 justifyContent: "center",
-                padding: "40px 20px",
+                padding: "40px 30px",
                 // padding: "20px",
                 // display: "none",
               }}
@@ -349,7 +363,7 @@ export default function Home() {
               <div
                 style={{
                   position: "relative",
-                  fontSize: "120px",
+                  fontSize: "60px",
                   fontWeight: "bold",
                   textAlign: "center",
                   color: "white",
@@ -360,7 +374,7 @@ export default function Home() {
               <div
                 style={{
                   position: "relative",
-                  fontSize: "70px",
+                  fontSize: "30px",
                   textAlign: "center",
                   color: "white",
                 }}
