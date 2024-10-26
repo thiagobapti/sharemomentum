@@ -323,6 +323,12 @@ export default function Home() {
                 height: "1920px", // Full height
                 width: "1080px", // Full width
                 position: "relative",
+                flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+                padding: "40px 20px",
                 // padding: "20px",
                 // display: "none",
               }}

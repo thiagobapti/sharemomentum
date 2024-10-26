@@ -30,9 +30,10 @@ function UnsplashDialog({
   const handleSearch = async (newSearch = false) => {
     const currentPage = newSearch ? 1 : page;
     const response = await fetch(
-      `https://api.unsplash.com/search/photos?query=${searchTerm}&page=${currentPage}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
+      `https://api.unsplash.com/search/photos?query=${searchTerm}&page=${currentPage}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk&w=1080&h=1920&fit=crop&ar=9:16&orientation=portrait`
     );
     const data = await response.json();
+    console.log(data);
     setImages(newSearch ? data.results : [...images, ...data.results]);
     setPage(currentPage + 1);
   };
@@ -65,9 +66,9 @@ function UnsplashDialog({
             {images.map((image: any) => (
               <GridItem key={image.id}>
                 <Image
-                  src={image.urls.small}
+                  src={image.urls.thumb}
                   alt={image.description}
-                  onClick={() => handleImageSelect(image.urls.small)}
+                  onClick={() => handleImageSelect(image.urls.full)}
                   style={{ cursor: "pointer" }}
                 />
               </GridItem>

@@ -8,7 +8,7 @@ const programs = [
       "Our Mission: Our mission is to improve the lives of people living in poverty by changing the way people think about and donate to charity.",
       "Cause Area: Poverty, Global Health and Development",
     ],
-    keywords: ["charity", "donation", "poverty", "global health"],
+    keywords: ["poverty", "global health"],
   },
   {
     id: 2,
@@ -18,16 +18,16 @@ const programs = [
       "Who we serve: House of Ruth’s services* support the women who live in the greater DC area. Washington, DC, has a history of lacking shelters for women, and our services were built on improving those conditions. House of Ruth is open to anyone who identifies as a woman and their dependents.",
       "How we serve: Our services include housing, child development and counseling. We believe that survivors need support in many different aspects of their lives in order to empower themselves toward a brighter future. We’re working tirelessly to continue to strengthen our services so that we can end the cycle of violence. Many of our program participants have gone on to purchase homes, pursue graduate degrees and thrive in their careers. All this wouldn’t have been possible without their self-determination and the support we’re able to offer.",
     ],
-    keywords: ["charity", "donation", "domestic violence"],
+    keywords: ["domestic violence"],
   },
   {
     id: 3,
     name: "Koinonia",
     context: [
       "About Becoming a Koinonia Parent: There is nothing more rewarding in this world than helping a child in need. Being a Koinonia parent means you will be a part of an organization with very high standards and expertise in helping children in need. Children in foster care have been exposed to various forms of trauma and we need you to work with us and help these children. As a Koinonia parent you might be the first person in their life to truly love and care for them.",
-      "About Adoption: Our adoption program assists families with Adoption Through Foster Care, Private Domestic Adoption, and Stepparent Adoption. Koinonia’s biggest priority is to provide a safe environment for children in foster care and prevent youth from entering the system if possible. Koinonia has several services put in place to give the best care to at-risk youth. In the case that children cannot be reunified with their biological families, we also work to find them a home open to adopting them through friends/family close to the youth or our vetted resource families.",
+      "About Adoption: Our adoption program assists families with Adoption Through Foster Care, Private Domestic Adoption, and Stepparent Adoption. Koinonia’s biggest priority is to provide a safe environment for children in foster care and prevent youth from entering the system if possible. Koinonia has several services put in place to give the best care to at-risk youth. In the case that children cannot be reunified with their biological families, we also work to find them a home open to adopting them through friends/family close to the youth or our vetted resource families. Note: We don't work with animal adoptions.",
     ],
-    keywords: ["charity", "donation", "adoption", "family"],
+    keywords: ["children adoption"],
   },
 ];
 
