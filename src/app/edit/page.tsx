@@ -141,6 +141,7 @@ export default function Home() {
           height={"100vh"}
           direction={"column"}
           paddingX={4}
+          paddingY={6}
           borderRight={"1px solid #ffefdc"}
         >
           <FormControl display={"flex"} flexDirection={"column"}>
@@ -390,12 +391,15 @@ export default function Home() {
           height={"100vh"}
           alignItems={"start"}
           paddingX={4}
+          paddingY={6}
           borderLeft={"1px solid #ffefdc"}
         >
-          <button onClick={handleDownload}>Download</button>
-          <label>
+          <Button onClick={handleDownload} colorScheme="purple">
+            Download
+          </Button>
+          {/* <label>
             <textarea defaultValue={externalLink}></textarea>
-          </label>
+          </label> */}
         </Flex>
       </Flex>
       <AlertDialog
