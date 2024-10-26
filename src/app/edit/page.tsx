@@ -110,6 +110,7 @@ export default function Home() {
   const handleGenerate = useCallback(() => {
     if (campaign.programId) {
       setIsWorking(true);
+
       fetch(`/api/generate?programId=${campaign.programId}`)
         .then((response) => response.json())
         .then((data: any) => {

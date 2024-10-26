@@ -39,19 +39,18 @@ export default async function handler(req: any, res: any) {
 
     const twoLiner = JSON.parse(response.choices[0].message.content.trim());
 
-    const randomPage = Math.floor(Math.random() * 10) + 1; // Random page between 1 and 10
+    console.log(keyword);
+
     const unsplashResponse = await fetch(
-      `https://api.unsplash.com/search/photos?query=${keyword}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk&w=1080&h=1920&fit=crop&ar=9:16&orientation=portrait&page=${randomPage}&per_page=30`
+      // `https://api.unsplash.com/search/photos?query=${keyword}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk&w=1080&h=1920&fit=crop&ar=9:16&orientation=portrait&page=${randomPage}`
+      `https://api.unsplash.com/photos/random?collections=${program.unsplashCollectionId}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk&w=1080&h=1920&fit=crop&ar=9:16&orientation=portrait`
     );
 
     const unsplashData = await unsplashResponse.json();
 
     const result = {
       llm: twoLiner,
-      backgroundImageUrl:
-        unsplashData.results[
-          Math.floor(Math.random() * unsplashData.results.length)
-        ].urls.full,
+      backgroundImageUrl: unsplashData.urls.full,
     };
 
     res.setHeader("Content-Type", "text/json");
