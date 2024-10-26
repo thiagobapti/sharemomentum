@@ -117,8 +117,8 @@ export default function Home() {
           setTheme(randomTheme);
           setCampaign((prevCampaign) => ({
             ...prevCampaign,
-            name: data.llm.phrase1,
-            subtitle: data.llm.phrase2,
+            name: data.llm.title,
+            subtitle: data.llm.subtitle,
             background: data.backgroundImageUrl,
             themeId: randomTheme.id.toString(),
             themeOpacity: randomTheme.defaultOpacity,

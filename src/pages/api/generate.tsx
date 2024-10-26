@@ -4,7 +4,6 @@ import { programs } from "@/app/data/database";
 export default async function handler(req: any, res: any) {
   const { programId } = req.query;
 
-  // Ensure programId is a string for comparison
   const program = programs.find(
     (entry: any) => entry.id.toString() === programId.toString()
   );
@@ -15,7 +14,8 @@ export default async function handler(req: any, res: any) {
   }
 
   const context = program.context;
-
+  const keywords = program.keywords;
+  const keyword = keywords[Math.floor(Math.random() * keywords.length)];
   const openai = new OpenAIApi({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -31,7 +31,7 @@ export default async function handler(req: any, res: any) {
         },
         {
           role: "user",
-          content: `Create a phrase of 5 to 10 words based on this context: ${context} and another from 10 to 20 words separating them in different json nodes named phrase1 and phrase2`,
+          content: `Considering the context: ${context} and the keyword: ${keyword}, create a title of 5 to 10 words and a subtitle from 10 to 20 words separating them in different json nodes named title and subtitle. The general idea is to be creative and to create campaigns inviting donors to donate to the cause.`,
         },
       ],
       max_tokens: 50,
@@ -39,18 +39,11 @@ export default async function handler(req: any, res: any) {
 
     const twoLiner = JSON.parse(response.choices[0].message.content.trim());
 
-    // unsplash api
-    // unsplash api
-    const keywords = program.keywords;
     const unsplashResponse = await fetch(
-      `https://api.unsplash.com/search/photos?query=${
-        keywords[Math.floor(Math.random() * keywords.length)]
-      }&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
+      `https://api.unsplash.com/search/photos?query=${keyword}&client_id=HqMm_ZIV-bj1vY-_Z7s1Vnb8hoaAwq5TYuiq_aaxCQk`
     );
 
     const unsplashData = await unsplashResponse.json();
-
-    /// unsplash api
 
     const result = {
       llm: twoLiner,
