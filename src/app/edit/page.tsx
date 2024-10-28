@@ -300,9 +300,9 @@ export default function Home() {
             direction={"row"}
             marginTop={"10px"}
             marginBottom={"12px"}
-            align={"flex-start"}
             width={"100%"}
             padding={"0 20px"}
+            justify={"center"}
           >
             <Image src={logoMinSvg} alt="logo" width={48} height={48} />
             <Text
@@ -327,6 +327,7 @@ export default function Home() {
             // border={"1px solid red"}
             direction={"column"}
             padding={"20px"}
+            alignItems={"center"}
             // alignItems={"center"}
           >
             <div
